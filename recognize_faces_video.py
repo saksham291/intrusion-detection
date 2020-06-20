@@ -119,8 +119,8 @@ while True:
 		key = cv2.waitKey(1) & 0xFF
 
 		if key == ord("k"):
-			p = os.path.sep.join(["intruder", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+".png"
-				])
+			p = os.path.sep.join(["intruder", "{}.png".format(
+				str(total).zfill(5))])
 			cv2.imwrite(p, orig)
 			total += 1
 
