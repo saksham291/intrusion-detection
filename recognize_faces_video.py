@@ -119,9 +119,14 @@ while True:
 		key = cv2.waitKey(1) & 0xFF
 
 		if key == ord("k"):
-			p = os.path.sep.join(["intruder", "{}.png".format(
-				str(total).zfill(5))])
+			#filetime = str(time.asctime(time.localtime()))+"_file"
+			filetime = str(time.time())
+			p = os.path.sep.join(["intruder/", filetime + ".png"])
 			cv2.imwrite(p, orig)
+			# dt = str(time.localtime())
+			# newname = dt+'_'+str(total)+'.png'
+			# os.rename("{}.png".format(str(total).zfill(5)), newname)
+			print(filetime)
 			total += 1
 
 		# if the `q` key was pressed, break from the loop
