@@ -12,6 +12,7 @@ import time
 import cv2
 import os
 from twilio.rest import Client
+from keys import *
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -132,10 +133,8 @@ while True:
 
 			# Your Account SID from twilio.com/console
 			account_sid = "AC6e8226fb812bbf02b5ebe3576e44f7d5"
-			# Your Auth Token from twilio.com/console
-			auth_token  = "xyz"
 			from_whatsapp_number = 'whatsapp:+14155238886'
-			to_whatsapp_number = 'whatsapp:+918299278436'
+
 			client = Client(account_sid, auth_token)
 			message = client.messages.create(body='Intrusion Detected!',
 			media_url='https://m.economictimes.com/thumb/msid-73420856,width-1200,height-900,resizemode-4,imgsize-272701/getty.jpg',
