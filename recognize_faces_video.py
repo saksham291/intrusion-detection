@@ -11,6 +11,7 @@ import pickle
 import time
 import cv2
 import os
+from twilio.rest import Client
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -85,6 +86,8 @@ while True:
 		# update the list of names
 		names.append(name)
 
+	# TODO: Add code for action when no known face detected.
+
 	# loop over the recognized faces
 	for ((top, right, bottom, left), name) in zip(boxes, names):
 		# rescale the face coordinates
@@ -124,8 +127,20 @@ while True:
 			p = os.path.sep.join(["intruder/", filetime + ".png"])
 			cv2.imwrite(p, orig)
 			# dt = str(time.localtime())
-			# newname = dt+'_'+str(total)+'.png'
+			file_location = 'D:/Projects/Code/Face detection/face-recognition-opencv/intruder/'+filetime+'.png'
 			# os.rename("{}.png".format(str(total).zfill(5)), newname)
+
+			# Your Account SID from twilio.com/console
+			account_sid = "AC6e8226fb812bbf02b5ebe3576e44f7d5"
+			# Your Auth Token from twilio.com/console
+			auth_token  = "cc85a82b2faa580f26851c7f5a8f8e50"
+			from_whatsapp_number = 'whatsapp:+14155238886'
+			to_whatsapp_number = 'whatsapp:+918299278436'
+			client = Client(account_sid, auth_token)
+			message = client.messages.create(body='Intrusion Detected!',
+			media_url='https://m.economictimes.com/thumb/msid-73420856,width-1200,height-900,resizemode-4,imgsize-272701/getty.jpg',
+			from_=from_whatsapp_number, to=to_whatsapp_number)
+			print(message.sid)
 			print(filetime)
 			total += 1
 
