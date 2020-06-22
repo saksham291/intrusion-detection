@@ -137,7 +137,7 @@ while True:
 
 			client = Client(account_sid, auth_token)
 			message = client.messages.create(body='Intrusion Detected!',
-			media_url='https://m.economictimes.com/thumb/msid-73420856,width-1200,height-900,resizemode-4,imgsize-272701/getty.jpg',
+			media_url='https://media-exp1.licdn.com/dms/image/C5603AQEgTykLWPaiLA/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=spsBWUL-NVSiATkSKO-7zhd2098Hy2Hi8hLxVsSY3O4',
 			from_=from_whatsapp_number, to=to_whatsapp_number)
 			print(message.sid)
 			print(filetime)
