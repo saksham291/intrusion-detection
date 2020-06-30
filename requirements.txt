@@ -1,0 +1,4 @@
+opencv-py
+imutils
+face_recognition
+twilio
