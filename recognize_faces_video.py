@@ -11,8 +11,10 @@ import pickle
 import time
 import cv2
 import os
+from datetime import datetime
 from twilio.rest import Client
 from keys import *
+from fileToServer import placeFile
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -124,23 +126,28 @@ while True:
 
 		if key == ord("k"):
 			#filetime = str(time.asctime(time.localtime()))+"_file"
-			filetime = str(time.time())
-			p = os.path.sep.join(["intruder/", filetime + ".png"])
-			cv2.imwrite(p, orig)
-			# dt = str(time.localtime())
-			file_location = 'D:/Projects/Code/Face detection/face-recognition-opencv/intruder/'+filetime+'.png'
-			# os.rename("{}.png".format(str(total).zfill(5)), newname)
 
+			def createfile():
+				filetime = str(time.time()+19800)
+				p = os.path.sep.join(["intruder", filetime + ".png"])
+				cv2.imwrite(p, orig)
+				print('File Created!')
+				file_location = filetime+'.png'
+				return p,file_location,float(filetime)
+				
+			filetoftp,fileName,filetimestamp = createfile()
+			time.sleep(1)
+			placeFile(filetoftp)
 			# Your Account SID from twilio.com/console
 			account_sid = "AC6e8226fb812bbf02b5ebe3576e44f7d5"
 			from_whatsapp_number = 'whatsapp:+14155238886'
 
 			client = Client(account_sid, auth_token)
-			message = client.messages.create(body='Intrusion Detected!',
-			media_url='https://media-exp1.licdn.com/dms/image/C5603AQEgTykLWPaiLA/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=spsBWUL-NVSiATkSKO-7zhd2098Hy2Hi8hLxVsSY3O4',
+			message = client.messages.create(body='Intrusion Detected @ '+ datetime.utcfromtimestamp(int(filetimestamp)).strftime('%Y-%m-%d %H:%M:%S'),
+			media_url='http://sakshambhushan.000webhostapp.com/intrusion_detection/'+fileName,
 			from_=from_whatsapp_number, to=to_whatsapp_number)
 			print(message.sid)
-			print(filetime)
+			#print(filetime)
 			total += 1
 
 		# if the `q` key was pressed, break from the loop
